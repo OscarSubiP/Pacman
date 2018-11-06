@@ -414,7 +414,7 @@ def cornersHeuristic(state, problem):
         distancePath += minManhattan
         cornersUnexplored.remove(nearCorner)
         currentState = nearCorner
-    
+
     return distancePath # Default to trivial solution
 
 	
@@ -508,20 +508,20 @@ def foodHeuristic(state, problem):
     Subsequent calls to this heuristic can access
     problem.heuristicInfo['wallCount']
     """
+    
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
     distancePath = 0
     distances = [0]
 
     for posFood in foodGrid.asList():
-        startState = problem.startingGameState
-        distance = mazeDistance(position, posFood, startState)
+        #startState = problem.startingGameState
+        distance = util.manhattanDistance(position, posFood)
         distances.append(distance)
 
     distancePath = max(distances)
 
     return distancePath
-
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
