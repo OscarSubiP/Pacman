@@ -393,21 +393,27 @@ def cornersHeuristic(state, problem):
     admissible (as well as consistent).
     """
     
+    """
+    This function returns a lower bound on the shortest path from the 
+    state to a goal of the problem. The goal is understood as eating all
+    the corners.
+    """
+    
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     distancePath = 0
     currentState = state[0]
 
-    cornerExplored = list(state[1])
+    initialStateCorners = list(state[1]) #List of initial states of the corners
     cornersUnexplored = []
-
+    
     for n in range(len(corners)):   #put corners to explore to the unexplored list
-        if cornerExplored[n] == 0:
+        if not initialStateCorners[n]:
             cornersUnexplored.append(corners[n])
-
+	
     while cornersUnexplored != []:
-        minManhattan = 999999   #init value for doing the manhattan
+        minManhattan = 999999   #init value for getting the minimum manhattan for each corner
         for candidateCorner in cornersUnexplored:
             manhattan = util.manhattanDistance(currentState, candidateCorner)
             if manhattan < minManhattan:    #get the nearest corner and the min manhattan
