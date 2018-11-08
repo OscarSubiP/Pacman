@@ -558,7 +558,13 @@ class ClosestDotSearchAgent(SearchAgent):
         food = gameState.getFood()
         walls = gameState.getWalls()
         problem = AnyFoodSearchProblem(gameState)
-
+		
+		'''
+		Use BFS to find the closest dot, similar to a greedy search since the
+		algorithm will find always the closest dot to it without taking into 
+		account if it is really the best way to eat all the dots of the problem.
+		'''
+		
         return breadthFirstSearch(problem)
 
 class AnyFoodSearchProblem(PositionSearchProblem):
@@ -593,7 +599,8 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         complete the problem definition.
         """
         x,y = state
-
+		
+		#Return list of positions indicating True if it is food or False if it is no food
         return state in self.food.asList()
 def mazeDistance(point1, point2, gameState):
     """
