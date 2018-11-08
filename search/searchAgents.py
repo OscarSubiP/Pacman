@@ -337,6 +337,11 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+	    """
+            Finds all the corners. The initial value of a corner is false
+            and when is visited, the value is setted to true in order
+            to visit all the corners.
+            """
             #init var
             x,y = state[0]
 
