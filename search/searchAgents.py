@@ -567,12 +567,12 @@ class ClosestDotSearchAgent(SearchAgent):
         food = gameState.getFood()
         walls = gameState.getWalls()
         problem = AnyFoodSearchProblem(gameState)
-		
-		'''
+        
+        """
 		Use BFS to find the closest dot, similar to a greedy search since the
 		algorithm will find always the closest dot to it without taking into 
 		account if it is really the best way to eat all the dots of the problem.
-		'''
+		"""
 		
         return breadthFirstSearch(problem)
 
