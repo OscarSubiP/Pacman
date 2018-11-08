@@ -119,7 +119,12 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-
+	"""
+	Use of depth first search algorithm to traverse the problem as a tree.
+	The objective is to find the fastest way to reach the goal.
+	Save the steps needed to reach the goal and return them.
+	Here is used a queue instead of a stack like in the depth first search, making it more efficient.
+	"""
     #init variables
     stack = util.Queue()
     visited = []
