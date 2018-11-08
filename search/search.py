@@ -86,7 +86,16 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-
+	
+	"""
+	Use of depth first search algorithm to traverse the problem as a tree.
+	The objective is to find the fastest way to reach the goal.
+	Save the steps needed to reach the goal and return them.
+	The main problem with DFS algorithm is that if the tree or problem is 
+	too large (meaning that the tree has a high depth), the algorithm is
+	unefficient.
+	"""
+	
     #init variables
     stack = util.Stack()
     visited = []
@@ -134,6 +143,17 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
+    
+    """
+    Using Priority Queue as the data structure for the function let us traverse
+    the problem as a tree in the same way as DFS and BFS but taking into
+    account the cost to reach the goal. Since the cost is uniform, the use
+    of Priority Queue is good enough to find the node of least cost because 
+    cost only takes into account the distance between the position and the goal
+    and it does not take into account the fact that some paths can have 
+    more cost than others depending on other factors. 
+    """
+    
     #init variables
     pQueue = util.PriorityQueue()
     visited = []
