@@ -525,6 +525,10 @@ def foodHeuristic(state, problem):
     
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    """
+    We want the maximum distance to know that at most
+    the path will be that distance.
+    """
     distancePath = 0
     distances = [0]
 
