@@ -190,6 +190,12 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
+    """
+    Here is used Priority Queue too.
+    The cost of the distance is uniform too but here
+    there is the heuristic cost, and this finds the path to the
+    goal with the lowest combined cost.
+    """
     #init variables
     pQueue = util.PriorityQueue()
     visited = []
