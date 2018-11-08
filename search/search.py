@@ -87,7 +87,7 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
 	
-	"""
+    """
 	Use of depth first search algorithm to traverse the problem as a tree.
 	The objective is to find the fastest way to reach the goal.
 	Save the steps needed to reach the goal and return them.
