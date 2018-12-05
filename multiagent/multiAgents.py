@@ -67,17 +67,18 @@ class ReflexAgent(Agent):
         to create a masterful evaluation function.
         """
         # Useful information you can extract from a GameState (pacman.py)
-
         successorGameState = currentGameState.generatePacmanSuccessor(action)
         newPos = successorGameState.getPacmanPosition()
         newFood = successorGameState.getFood()
         newGhostStates = successorGameState.getGhostStates()
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
+        "*** YOUR CODE HERE ***"
+
         foodList = newFood.asList()
 
-        ghostDistance = min(manhattan_distance(newPos, ghost.configuration.pos) for ghost in newGhostStates)
-        foodDistance = min(manhattan_distance(newPos, nextFood) for nextFood in foodList) if foodList else 0
+        ghostDistance = min(util.manhattanDistance(newPos, ghost.configuration.pos) for ghost in newGhostStates)
+        foodDistance = min(util.manhattanDistance(newPos, nextFood) for nextFood in foodList) if foodList else 0
         scaredTime = min(newScaredTimes)
 
         foodLeftScore = -len(foodList) #Force the agent to eat pellets as fast as possible
@@ -86,9 +87,9 @@ class ReflexAgent(Agent):
         #a scared ghost than kill it because then it respawns as an enemy again)
         ghostScore = 0
         if(scaredTime == 0):
-        	ghostScore = -2 / (ghostDistance + 1)
+            ghostScore = -2 / (ghostDistance + 1)
         else:
-        	0.5 / (ghostDistance + 1) 
+            0.5 / (ghostDistance + 1) 
 
         foodScore = 0.5 / (foodDistance + 1) #Force the agent to move closer to food
         
@@ -97,9 +98,6 @@ class ReflexAgent(Agent):
         totalScore = foodLeftScore + ghostScore + foodScore + powerScore
 
         return totalScore
-
-def manhattan_distance(point1, point2):
-    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
 
 def scoreEvaluationFunction(currentGameState):
     """
@@ -154,7 +152,44 @@ class MinimaxAgent(MultiAgentSearchAgent):
             Returns the total number of agents in the game
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        bestScore, bestAction = self.maxValue(gameState, self.depth)
+
+        return bestAction
+
+    def maxValue(self, gameState, depth):
+        if gameState.isWin() or gameState.isLose() or depth == 0:
+            return self.evaluationFunction(gameState),
+
+        actions = gameState.getLegalActions()
+            
+        scores = [self.minValue(gameState.generateSuccessor(self.index, action), 1, depth) for action in actions]
+            
+        bestScore = max(scores)
+        bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
+        bestIndex = bestIndices[0]
+
+        return bestScore, actions[bestIndex]
+
+    def minValue(self, gameState, agent, depth):
+        if gameState.isWin() or gameState.isLose() or depth == 0:
+            return self.evaluationFunction(gameState),
+
+        actions = gameState.getLegalActions(agent)
+        scores = []
+
+        if(agent != gameState.getNumAgents() - 1):
+            scores =[self.minValue(gameState.generateSuccessor(agent, action), agent + 1, depth) for action in actions]
+        else:
+            scores = [self.maxValue(gameState.generateSuccessor(agent, action), (depth - 1))[0] for action in actions]
+
+        minScore = min(scores)
+        worstIndices = [index for index in range(len(scores)) if scores[index] == minScore]
+        worstIndex = worstIndices[0]
+
+        return minScore, actions[worstIndex]
+
+        #util.raiseNotDefined()
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
