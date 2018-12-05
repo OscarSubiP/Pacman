@@ -67,14 +67,39 @@ class ReflexAgent(Agent):
         to create a masterful evaluation function.
         """
         # Useful information you can extract from a GameState (pacman.py)
+
         successorGameState = currentGameState.generatePacmanSuccessor(action)
         newPos = successorGameState.getPacmanPosition()
         newFood = successorGameState.getFood()
         newGhostStates = successorGameState.getGhostStates()
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
-        "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        foodList = newFood.asList()
+
+        ghostDistance = min(manhattan_distance(newPos, ghost.configuration.pos) for ghost in newGhostStates)
+        foodDistance = min(manhattan_distance(newPos, nextFood) for nextFood in foodList) if foodList else 0
+        scaredTime = min(newScaredTimes)
+
+        foodLeftScore = -len(foodList) #Force the agent to eat pellets as fast as possible
+
+        #Force agent to avoid ghost, altough they are edible (because of the game, it is better to have 
+        #a scared ghost than kill it because then it respawns as an enemy again)
+        ghostScore = 0
+        if(scaredTime == 0):
+        	ghostScore = -2 / (ghostDistance + 1)
+        else:
+        	0.5 / (ghostDistance + 1) 
+
+        foodScore = 0.5 / (foodDistance + 1) #Force the agent to move closer to food
+        
+        powerScore = scaredTime #Power pellets improve score
+
+        totalScore = foodLeftScore + ghostScore + foodScore + powerScore
+
+        return totalScore
+
+def manhattan_distance(point1, point2):
+    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
 
 def scoreEvaluationFunction(currentGameState):
     """
